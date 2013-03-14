@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Adaptive Web App UI with CSS Regions</title>
+  <meta charset="UTF-8">
+  <style type="text/css">
+  
+    * {
+      box-sizing: border-box;
+    }
+    
+    html,
+    body{
+      height: 100%;
+      margin: 0;
+      font-family: helvetica, arial, sans-serif;
+    }
+    
+    header{
+      background: #eee;
+      padding: 1rem 0;
+    }
+    
+    .wrapper{
+      max-width: 45rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+    
+    #app{
+      height: 100%;
+      position: relative;
+      background: white;
+      -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    body.menu-open #app{
+      -webkit-transform: translateX(10rem);
+    }
+    
+    #menu{
+      background: black;
+      display: block;
+      width: 15rem;
+      height: 100%;
+      position: absolute;
+      z-index: -1;
+    }
+    
+    .control,
+    input[type="search"]{
+      height: 2rem;
+      margin: 0;
+      padding: 0;
+      vertical-align: top;
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    input[type="search"]{
+      -webkit-appearance: none;
+      border: 1px solid #d7d7d7;
+      width: auto;
+      width: 50%;
+      font-size: 120%;
+    }     
+    
+    .control{
+      background: black;
+      padding: 0.5rem 0.7rem;
+      color: white;
+      cursor: pointer;
+    }
+    
+    #account, 
+    #language{
+      float: right;
+    }
+    
+    #account{
+      margin-right: 0.7rem;
+    }
+    
+    #menu-toggle{
+      display: none;
+    }
+    
+    
+    ol{
+      list-style-position: inside;
+      padding: 0rem 0 2rem;
+    }
+    
+    li{
+      padding: 1rem 0;
+      border-bottom: 1px solid #d7d7d7;
+      color: #444;
+      font-size: 1.1rem;
+    }
+    
+    footer a{
+        color: #4d90fe;
+    }
+    
+    .tip{
+      background: #ffc;
+      padding: 1rem;
+      line-height: 150%;
+    }
+    
+    @media screen and (min-width: 28rem){
+      footer {
+        text-align: center;
+      }
+
+      footer a + a{
+        margin-left: 2rem;
+      }
+      
+    }
+    
+    @media screen and (max-width: 28rem){
+      
+      #account, #language, footer a{
+        -webkit-flow-into: controls;
+        display: block;
+        float: none;
+        padding: 0.5rem 0.7rem;
+        margin: 0;
+        border-bottom: 1px solid #444;
+      }
+      
+      footer a{
+        text-decoration: none;
+      }
+      
+      #menu{
+        -webkit-flow-from: controls;
+      }
+      
+      #menu-toggle{
+        display: inline-block;
+        max-width: 20%;
+      }
+      
+      input[type="search"]{
+        width: 80%;
+        float: right;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <aside id="menu">
+      <!-- the menu is populated with CSS Regions on narrow viewports -->
+  </aside>
+  
+  <div id="app">
+      <header>
+        <div class="wrapper">
+          <!-- the menu toggle is visible only on narrow viewports -->
+          <a href="#" class="control" id="menu-toggle">Menu</a>
+
+          <input type="search" results="5" placeholder='Search for ...'/>
+          <a href="#" class="control" id="language">Language</a>
+          <a href="#" class="control" id="account">Account</a>
+        </div>
+      </header>
+      <div class="wrapper">
+        <p class="tip"><strong>Tip: Resize the browser window.</strong> Notice the buttons above and links at the bottom go into the slide-out menu when the viewport is too narrow. See the <a href="#">Adaptive Web App UI with CSS Regions</a> blogpost for details.</p>
+        <ol>
+          <li>List item one</li>
+          <li>List item two</li>
+          <li>List item three</li>
+          <li>List item four</li>
+          <li>List item five</li>
+          <li>List item six</li>
+          <li>List item seven</li>
+          <li>List item eight</li>
+        </ol>
+        <footer>
+          <nav>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Feedback</a>
+          </nav>
+        </footer>
+      </div>
+  </div>
+  
+  <script type="text/javascript">
+  
+  var toggle = document.querySelector('#menu-toggle')
+  var body = document.querySelector('body')
+  
+  toggle.addEventListener('click', function(e){
+    body.classList.toggle('menu-open')
+  })
+  
+  window.addEventListener('resize', function(e){
+    // hide menu if viewport is enlarged
+    if (window.matchMedia('(min-width: 28rem)').matches){
+      body.classList.remove('menu-open')
+    }
+  })
+  
+  </script>
+</body>
+</html>
