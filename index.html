@@ -114,6 +114,9 @@
       padding: 1rem;
       line-height: 150%;
     }
+    .tip.warning{
+      background: pink;
+    }
     
     @media screen and (min-width: 28rem){
       footer {
@@ -199,6 +202,7 @@
       </div>
   </div>
   
+  <script type="text/javascript" src="modernizr.custom.js"></script>
   <script type="text/javascript">
   
   var toggle = document.querySelector('#menu-toggle')
@@ -216,12 +220,29 @@
     }
   }
   
-  toggle.addEventListener('click', function(e){
-    body.classList.toggle('menu-open')
-  })
+  // Check for CSS Regions support
+  if (Modernizr.regions){
+    toggle.addEventListener('click', function(e){
+      body.classList.toggle('menu-open')
+    })
+
+    window.addEventListener('resize', toggleMenu)
+    document.addEventListener('DOMContentLoaded', toggleMenu)
+  }
+  else{
+    // no CSS Regions support
+    var h = []
+    var p = function(){ h.push.apply(h, arguments) }
+    var tip = document.querySelector('.tip')
+        
+    p('<strong>Oops! </strong>')
+    p('This browser doesn\'t seem to support CSS Regions. ')
+    p('You can use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a> with <a href="http://adobe.github.com/web-platform/samples/css-regions/#enable-regions" target="_blank">some settings</a> turned on.')
+    
+    tip.classList.add('warning')
+    tip.innerHTML = h.join('')
+  }
   
-  window.addEventListener('resize', toggleMenu)
-  document.addEventListener('DOMContentLoaded', toggleMenu)
   
   </script>
 </body>
