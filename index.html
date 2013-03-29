@@ -13,6 +13,7 @@
     body{
       height: 100%;
       margin: 0;
+      min-width: 20rem;
       font-family: helvetica, arial, sans-serif;
     }
     
@@ -80,6 +81,11 @@
     
     #account{
       margin-right: 0.7rem;
+      background: rgb(255, 186, 0);
+    }
+    
+    #language{
+      background: rgb(207, 103, 135);
     }
     
     #menu-toggle{
@@ -99,8 +105,8 @@
       font-size: 1.1rem;
     }
     
-    footer a{
-        color: #4d90fe;
+    footer .control{
+        background: rgb(93, 144, 225);
     }
     
     .tip{
@@ -114,8 +120,8 @@
         text-align: center;
       }
 
-      footer a + a{
-        margin-left: 2rem;
+      footer .control + .control{
+        margin-left: 0.7rem;
       }
       
     }
@@ -131,8 +137,9 @@
         border-bottom: 1px solid #444;
       }
       
-      footer a{
+      footer .control{
         text-decoration: none;
+        display: block;
       }
       
       #menu{
@@ -142,10 +149,12 @@
       #menu-toggle{
         display: inline-block;
         max-width: 20%;
+        overflow: hidden;
       }
       
       input[type="search"]{
-        width: 80%;
+        width: 75%;
+        display: inline-block;
         float: right;
       }
     }
@@ -182,9 +191,9 @@
         </ol>
         <footer>
           <nav>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Feedback</a>
+            <a href="#" class="control">Terms of Service</a>
+            <a href="#" class="control">Privacy Policy</a>
+            <a href="#" class="control">Feedback</a>
           </nav>
         </footer>
       </div>
@@ -194,17 +203,25 @@
   
   var toggle = document.querySelector('#menu-toggle')
   var body = document.querySelector('body')
+  var initialDemo = false
+  
+  function toggleMenu(){
+    // hide menu if viewport is wide enough
+    if (window.matchMedia('(min-width: 28rem)').matches){
+      body.classList.remove('menu-open')
+    }
+    else{
+      !initialDemo && body.classList.add('menu-open')
+      initialDemo = true
+    }
+  }
   
   toggle.addEventListener('click', function(e){
     body.classList.toggle('menu-open')
   })
   
-  window.addEventListener('resize', function(e){
-    // hide menu if viewport is enlarged
-    if (window.matchMedia('(min-width: 28rem)').matches){
-      body.classList.remove('menu-open')
-    }
-  })
+  window.addEventListener('resize', toggleMenu)
+  document.addEventListener('DOMContentLoaded', toggleMenu)
   
   </script>
 </body>
