@@ -34,10 +34,16 @@
       position: relative;
       background: white;
       -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      -moz-transition: -moz-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      -ms-transition: -ms-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
     
     body.menu-open #app{
       -webkit-transform: translateX(10rem);
+      -moz-transform: translateX(10rem);
+      -ms-transform: translateX(10rem);
+      transform: translateX(10rem);
     }
     
     #menu{
@@ -61,6 +67,7 @@
     
     input[type="search"]{
       -webkit-appearance: none;
+      -moz-appearance: none;
       border: 1px solid #d7d7d7;
       width: auto;
       width: 50%;
@@ -70,6 +77,7 @@
     .control{
       background: black;
       padding: 0.5rem 0.7rem;
+      height: auto;
       color: white;
       cursor: pointer;
     }
@@ -133,6 +141,8 @@
       
       #account, #language, footer a{
         -webkit-flow-into: controls;
+        -ms-flow-into: controls;
+        flow-into: controls;
         display: block;
         float: none;
         padding: 0.5rem 0.7rem;
@@ -147,6 +157,8 @@
       
       #menu{
         -webkit-flow-from: controls;
+        -ms-flow-from: controls;
+        flow-from: controls;
       }
       
       #menu-toggle{
