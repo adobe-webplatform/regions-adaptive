@@ -248,9 +248,8 @@
     var p = function(){ h.push.apply(h, arguments) }
     var tip = document.querySelector('.tip')
         
-    p('<strong>Oops! </strong>')
     p('This browser doesn\'t seem to support CSS Regions. ')
-    p('You can use <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a> with <a href="http://adobe.github.com/web-platform/samples/css-regions/#enable-regions" target="_blank">some settings</a> turned on.')
+    p('<a href="http://html.adobe.com/webplatform/enable/" target="_blank">Find out how to get one</a>.')
     
     tip.classList.add('warning')
     tip.innerHTML = h.join('')
