@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, user-scalable=false;">
   <meta charset="UTF-8">
   <style type="text/css">
-  
+
     * {
       box-sizing: border-box;
     }
-    
+
     html,
     body{
       height: 100%;
@@ -17,19 +17,19 @@
       min-width: 20rem;
       font-family: helvetica, arial, sans-serif;
     }
-    
+
     header{
       background: #eee;
       padding: 1rem 0;
     }
-    
+
     .wrapper{
       max-width: 45rem;
       margin: 0 auto;
       padding: 0 1.5rem;
       position: relative;
     }
-    
+
     #app{
       height: 100%;
       position: relative;
@@ -39,14 +39,14 @@
       -ms-transition: -ms-transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-    
+
     body.menu-open #app{
       -webkit-transform: translateX(10rem);
       -moz-transform: translateX(10rem);
       -ms-transform: translateX(10rem);
       transform: translateX(10rem);
     }
-    
+
     #menu{
       background: black;
       display: block;
@@ -55,7 +55,7 @@
       position: absolute;
       z-index: -1;
     }
-    
+
     .control,
     input[type="search"]{
       height: 2rem;
@@ -65,7 +65,7 @@
       display: inline-block;
       text-decoration: none;
     }
-    
+
     input[type="search"]{
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -73,8 +73,8 @@
       width: auto;
       width: 50%;
       font-size: 120%;
-    }     
-    
+    }
+
     .control{
       background: black;
       padding: 0.5rem 0.7rem;
@@ -82,42 +82,42 @@
       color: white;
       cursor: pointer;
     }
-    
-    #account, 
+
+    #account,
     #language{
       float: right;
     }
-    
+
     #account{
       margin-right: 0.7rem;
       background: rgb(255, 186, 0);
     }
-    
+
     #language{
       background: rgb(207, 103, 135);
     }
-    
+
     #menu-toggle{
       display: none;
     }
-    
-    
+
+
     ol{
       list-style-position: inside;
       padding: 0rem 0 2rem;
     }
-    
+
     li{
       padding: 1rem 0;
       border-bottom: 1px solid #d7d7d7;
       color: #444;
       font-size: 1.1rem;
     }
-    
+
     footer .control{
         background: rgb(93, 144, 225);
     }
-    
+
     .tip{
       background: #ffc;
       padding: 1rem;
@@ -126,7 +126,7 @@
     .tip.warning{
       background: pink;
     }
-    
+
     @media screen and (min-width: 28rem){
       footer {
         text-align: center;
@@ -135,11 +135,11 @@
       footer .control + .control{
         margin-left: 0.7rem;
       }
-      
+
     }
-    
+
     @media screen and (max-width: 28rem){
-      
+
       #account, #language, footer a{
         -webkit-flow-into: controls;
         -ms-flow-into: controls;
@@ -150,38 +150,38 @@
         margin: 0;
         border-bottom: 1px solid #444;
       }
-      
+
       footer .control{
         text-decoration: none;
         display: block;
       }
-      
+
       #menu{
         -webkit-flow-from: controls;
         -ms-flow-from: controls;
         flow-from: controls;
       }
-      
+
       #menu-toggle{
         display: inline-block;
         max-width: 20%;
         overflow: hidden;
       }
-      
+
       input[type="search"]{
         width: 75%;
         display: inline-block;
         float: right;
       }
     }
-    
+
   </style>
 </head>
 <body>
   <aside id="menu">
       <!-- the menu is populated with CSS Regions on narrow viewports -->
   </aside>
-  
+
   <div id="app">
       <header>
         <div class="wrapper">
@@ -214,48 +214,40 @@
         </footer>
       </div>
   </div>
-  
+
+  <script>
+  // Ask for manual control of the polyfill.
+  window.cssRegionsManualTrigger = true;
+  </script>
   <script type="text/javascript" src="modernizr.custom.js"></script>
+  <script src="http://fremycompany.github.io/css-regions-polyfill/cssregions.min.js"></script>
   <script type="text/javascript">
-  
+
   var toggle = document.querySelector('#menu-toggle')
   var body = document.querySelector('body')
-  var initialDemo = false
-  
+
   function toggleMenu(){
     // hide menu if viewport is wide enough
     if (window.matchMedia('(min-width: 28rem)').matches){
       body.classList.remove('menu-open')
     }
     else{
-      !initialDemo && body.classList.add('menu-open')
-      initialDemo = true
+      body.classList.add('menu-open')
     }
   }
-  
-  // Check for CSS Regions support
-  if (Modernizr.regions){
-    toggle.addEventListener('click', function(e){
+
+  toggle.addEventListener('click', function(e){
       body.classList.toggle('menu-open')
     })
 
-    window.addEventListener('resize', toggleMenu)
-    document.addEventListener('DOMContentLoaded', toggleMenu)
+  window.addEventListener('resize', toggleMenu)
+  document.addEventListener('DOMContentLoaded', toggleMenu)
+
+  // Enable the polyfill if CSS Regions is not supported natively.
+  if (!Modernizr.regions) {
+    cssRegions.enablePolyfill();
   }
-  else{
-    // no CSS Regions support
-    var h = []
-    var p = function(){ h.push.apply(h, arguments) }
-    var tip = document.querySelector('.tip')
-        
-    p('This browser doesn\'t seem to support CSS Regions. ')
-    p('<a href="http://html.adobe.com/webplatform/enable/" target="_blank">Find out how to get one</a>.')
-    
-    tip.classList.add('warning')
-    tip.innerHTML = h.join('')
-  }
-  
-  
+
   </script>
 </body>
 </html>
